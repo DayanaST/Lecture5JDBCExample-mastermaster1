@@ -1,4 +1,4 @@
-package com.company.repositories.interfaces; // Исправьте на это!
+package com.company.repositories.interfaces;
 
 import com.company.models.User;
 import java.util.List;

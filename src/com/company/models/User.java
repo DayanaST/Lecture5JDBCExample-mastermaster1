@@ -3,13 +3,10 @@ package com.company.models;
 public class User {
     private int id;
     private String name;
-
-    // Для создания нового (ID поставит база)
     public User(String name) {
         setName(name);
     }
 
-    // Для получения из базы (с ID)
     public User(int id, String name) {
         setId(id);
         setName(name);
