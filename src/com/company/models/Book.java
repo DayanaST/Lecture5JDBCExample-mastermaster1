@@ -23,4 +23,3 @@ public class Book {
         return authorId;
     }
 }
-
