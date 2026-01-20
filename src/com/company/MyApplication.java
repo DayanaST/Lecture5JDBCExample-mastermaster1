@@ -14,6 +14,10 @@ public class MyApplication {
         this.controller = controller;
     }
 
+    public <UserController> MyApplication(UserController controller, com.company.controllers.UserController controller1) {
+        this.controller = controller1;
+    }
+
     public void start() {
         while (true) {
             System.out.println("\n--- LIBRARY SYSTEM ---");
@@ -29,7 +33,7 @@ public class MyApplication {
                 handleOption(option);
             } catch (Exception e) {
                 System.out.println("Error: Invalid input.");
-                scanner.nextLine(); // очистка буфера
+                scanner.nextLine();
             }
         }
     }

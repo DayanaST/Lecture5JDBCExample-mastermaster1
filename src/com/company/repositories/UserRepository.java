@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IUserRepository {
-    private final IDB db;  // Dependency Injection
+    private final IDB db;
 
     public UserRepository(IDB db) {
         this.db = db;
@@ -16,22 +16,20 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public boolean createUser(User user) {
-        Connection con = null;
+        try (Connection con = db.getConnection()) {
 
-        try {
-            con = db.getConnection();
             String sql = "INSERT INTO users(name) VALUES (?)";
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setString(1, user.getName());
 
-            st.execute();
+            int rows = st.executeUpdate();
 
-            return true;
+            return rows > 0;
+
         } catch (SQLException e) {
             System.out.println("sql error: " + e.getMessage());
         }
-
         return false;
     }
 

@@ -1,7 +1,5 @@
 package com.company.data;
-
 import com.company.data.interfaces.IDB;
-
 import java.sql.*;
 
 public class PostgresDB implements IDB {
@@ -9,7 +7,6 @@ public class PostgresDB implements IDB {
     private String username;
     private String password;
     private String dbName;
-
     private Connection connection;
 
     public PostgresDB(String host, String username, String password, String dbName) {
@@ -28,9 +25,7 @@ public class PostgresDB implements IDB {
             }
 
             Class.forName("org.postgresql.Driver");
-
             connection = DriverManager.getConnection(connectionUrl, username, password);
-
             return connection;
         } catch (Exception e) {
             System.out.println("failed to connect to postgres: " + e.getMessage());
