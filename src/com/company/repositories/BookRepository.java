@@ -8,12 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRepository implements IBookRepository {
-    private final IDB db;
-
-    public BookRepository(IDB db) {
-        this.db = db;
-    }
+public record BookRepository(IDB db) implements IBookRepository {
 
     @Override
     public boolean createBook(Book book) {
