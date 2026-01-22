@@ -1,11 +1,13 @@
 package com.company.repositories;
 import com.company.data.interfaces.IDB;
 import com.company.models.Book;
+import com.company.repositories.interfaces.IBookRepository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRepository {
+public class BookRepository implements IBookRepository {
     private final IDB db;
 
     public BookRepository(IDB db) { this.db = db; }

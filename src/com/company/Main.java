@@ -7,6 +7,7 @@ import com.company.data.PostgresDB;
 import com.company.data.interfaces.IDB;
 import com.company.repositories.UserRepository;
 import com.company.repositories.BookRepository;
+import com.company.repositories.interfaces.IBookRepository;
 import com.company.repositories.interfaces.IUserRepository;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
         );
 
         IUserRepository userRepo = new UserRepository(db);
-        BookRepository bookRepo = new BookRepository(db);
+        IBookRepository bookRepo = new BookRepository(db);
         UserController controller = new UserController(userRepo,bookRepo); {
         }
         MyApplication app = new MyApplication( controller);

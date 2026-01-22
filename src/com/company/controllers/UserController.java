@@ -3,14 +3,15 @@ package com.company.controllers;
 import com.company.models.Book;
 import com.company.models.User;
 import com.company.repositories.BookRepository;
+import com.company.repositories.interfaces.IBookRepository;
 import com.company.repositories.interfaces.IUserRepository;
 import java.util.List;
 
 public class UserController {
     private final IUserRepository userRepo;
-    private final BookRepository bookRepo;
+    private final IBookRepository bookRepo;
 
-    public UserController(IUserRepository userRepo, BookRepository bookRepo) {
+    public UserController(IUserRepository userRepo, IBookRepository bookRepo) {
         this.userRepo = userRepo;
         this.bookRepo = bookRepo;
     }
