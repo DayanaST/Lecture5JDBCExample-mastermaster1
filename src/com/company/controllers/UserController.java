@@ -3,15 +3,16 @@ package com.company.controllers;
 import com.company.models.Book;
 import com.company.models.User;
 import com.company.repositories.BookRepository;
-import com.company.repositories.interfaces.IBookRepository;
 import com.company.repositories.interfaces.IUserRepository;
+
 import java.util.List;
 
 public class UserController {
-    private final IUserRepository userRepo;
-    private final IBookRepository bookRepo;
 
-    public UserController(IUserRepository userRepo, IBookRepository bookRepo) {
+    private final IUserRepository userRepo;
+    private final BookRepository bookRepo;
+
+    public UserController(IUserRepository userRepo, BookRepository bookRepo) {
         this.userRepo = userRepo;
         this.bookRepo = bookRepo;
     }
@@ -28,7 +29,8 @@ public class UserController {
         return userRepo.createUser(new User(name));
     }
 
-    public boolean addReview(int bookId, Object clientName, String comment) {
-        return false;
+    public boolean addBook(String title, int authorId) {
+        return bookRepo.createBook(new Book(0, title, authorId));
     }
 }
+
