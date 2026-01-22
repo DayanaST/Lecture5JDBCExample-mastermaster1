@@ -1,0 +1,8 @@
+package com.company.repositories.interfaces;
+import com.company.models.Client;
+import java.util.List;
+
+public interface IClientRepository {
+    boolean createClient(Client client);
+    List<Client> getAllClients();
+}

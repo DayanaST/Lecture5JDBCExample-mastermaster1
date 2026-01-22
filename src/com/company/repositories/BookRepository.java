@@ -20,16 +20,18 @@ public class BookRepository implements IBookRepository {
         String sql = "INSERT INTO books(title, author_id) VALUES (?, ?)";
         try (Connection con = db.getConnection();
              PreparedStatement st = con.prepareStatement(sql)) {
+
             st.setString(1, book.getTitle());
             st.setInt(2, book.getAuthorId());
-            return st.executeUpdate() > 0;
+
+            int rowsAffected = st.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            System.out.println("Error adding book: " + e.getMessage());
+            System.out.println("SQL error: " + e.getMessage());
             return false;
         }
     }
 
-    // Улучшенный метод получения всех книг (сразу с именами авторов)
     @Override
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();

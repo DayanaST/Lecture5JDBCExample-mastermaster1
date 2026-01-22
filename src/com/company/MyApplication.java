@@ -3,12 +3,12 @@ package com.company;
 import com.company.controllers.UserController;
 import com.company.models.Book;
 import com.company.models.User;
+import com.company.models.Client;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class MyApplication {
-
     private final Scanner scanner = new Scanner(System.in);
     private final UserController controller;
 
@@ -23,15 +23,18 @@ public class MyApplication {
             System.out.println("2. Show all authors");
             System.out.println("3. Add new author");
             System.out.println("4. Add new book");
+            System.out.println("5. Show all clients");
+            System.out.println("6. Add new client");
             System.out.println("0. Exit");
             System.out.print("Select option: ");
 
             try {
                 int option = scanner.nextInt();
+                scanner.nextLine();
                 if (option == 0) break;
                 handleOption(option);
             } catch (Exception e) {
-                System.out.println("Invalid input");
+                System.out.println("Invalid input. Please enter a number.");
                 scanner.nextLine();
             }
         }
@@ -43,6 +46,8 @@ public class MyApplication {
             case 2 -> showAuthors();
             case 3 -> addAuthor();
             case 4 -> addBook();
+            case 5 -> showClients(); // Новый метод
+            case 6 -> addClient(); // Новый метод
             default -> System.out.println("Wrong option");
         }
     }
@@ -66,24 +71,36 @@ public class MyApplication {
     }
 
     private void addAuthor() {
-        scanner.nextLine();
         System.out.print("Enter author name: ");
         String name = scanner.nextLine();
         System.out.println(controller.addAuthor(name) ? "Success" : "Failed");
     }
 
     private void addBook() {
-        scanner.nextLine();
         System.out.print("Enter book title: ");
         String title = scanner.nextLine();
-
         System.out.print("Enter author ID: ");
         int authorId = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.println(
-                controller.addBook(title, authorId)
-                        ? "Book added"
-                        : "Failed"
-        );
+        System.out.println(controller.addBook(title, authorId));
+    }
+
+    private void showClients() {
+        List<Client> clients = controller.getAllClients();
+        if (clients == null || clients.isEmpty()) {
+            System.out.println("No clients found");
+        } else {
+            clients.forEach(System.out::println);
+        }
+    }
+
+    private void addClient() {
+        System.out.print("Enter client first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Enter client last name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.println(controller.addClient(firstName, lastName));
     }
 }
