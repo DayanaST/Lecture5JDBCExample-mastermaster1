@@ -59,7 +59,6 @@ public class MyApplication {
     }
 
     private void leaveFeedbackMenu() {
-        scanner.nextLine();
         System.out.print("Your name: ");
         String name = scanner.nextLine();
         System.out.print("Your feedback: ");
