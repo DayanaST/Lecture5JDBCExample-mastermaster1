@@ -2,6 +2,7 @@ package com.company.repositories;
 
 import com.company.data.interfaces.IDB;
 import com.company.models.User;
+import com.company.models.Role;
 import com.company.repositories.interfaces.IUserRepository;
 import java.sql.*;
 import java.util.ArrayList;
@@ -46,8 +47,12 @@ public class UserRepository implements IUserRepository {
 
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new User(rs.getInt("author_id"),
-                        rs.getString("name"));
+                return new User(
+                        rs.getInt("author_id"),
+                        rs.getString("name"),
+                        Role.USER   // пока по умолчанию
+                );
+
             }
         } catch (SQLException e) {
             System.out.println("sql error: " + e.getMessage());

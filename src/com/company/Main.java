@@ -16,18 +16,18 @@ import com.company.repositories.interfaces.IClientRepository;
 
 public class Main {
     public static void main(String[] args) {
-        // Подключение к базе данных
-        IDB db = new PostgresDB(
+        IDB db = DBInstance.getInstance();
+        (
                 "jdbc:postgresql://localhost:5432",
                 "postgres",
                 "0000",
                 "librd"
         );
 
-        IUserRepository userRepo = new UserRepository(db);
-        IBookRepository bookRepo = new BookRepository(db);
-        IClientRepository clientRepo = new ClientRepository(db);
-        IFeedbackRepository feedbackRepo = new FeedbackRepository(db);
+        IUserRepository userRepo = RepositoryFactory.createUserRepo(db);
+        IBookRepository bookRepo = RepositoryFactory.createBookRepo(db);
+        IClientRepository clientRepo = RepositoryFactory.createClientRepo(db);
+        IFeedbackRepository feedRepo = com.company.factories.RepositoryFactory.createFeedbackRepo(db);
         IFeedbackController feedbackController = new FeedbackController(feedbackRepo);
 
         UserController controller = new UserController(userRepo, bookRepo, clientRepo);

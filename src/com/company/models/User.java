@@ -3,13 +3,17 @@ package com.company.models;
 public class User {
     private int id;
     private String name;
-    public User(String name) {
-        setName(name);
+    private Role role;
+
+    public User(String name, Role role) {
+        this.name = name;
+        this.role = role;
     }
 
-    public User(int id, String name) {
-        setId(id);
-        setName(name);
+    public User(int id, String name, Role role) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
     }
 
     public int getId() { return id; }
@@ -18,8 +22,12 @@ public class User {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+
     @Override
     public String toString() {
-        return "User{id=" + id + ", name='" + name + "'}";
+        return "User{id=" + id + ", name='" + name + "', role=" + role + "}";
     }
 }
+
