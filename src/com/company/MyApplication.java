@@ -5,7 +5,7 @@ import com.company.controllers.interfaces.IFeedbackController;
 import com.company.models.Book;
 import com.company.models.User;
 import com.company.models.Client;
-
+import com.company.models.Role;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,11 +13,12 @@ public class MyApplication {
     private final Scanner scanner = new Scanner(System.in);
     private final UserController controller;
     private final IFeedbackController feedbackController;
-
+    private User currentUser;
 
     public MyApplication(UserController controller, IFeedbackController feedbackController) {
         this.controller = controller;
-        this.feedbackController = feedbackController; // Теперь это поле не будет пустым
+        this.feedbackController = feedbackController;
+        this.currentUser = new User(1, "Admin", Role.ADMIN);
     }
 
     public void start() {
@@ -103,7 +104,7 @@ public class MyApplication {
         int authorId = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println(controller.addBook(title, authorId));
+        System.out.println(controller.addBook(currentUser, title, authorId));
     }
 
     private void showClients() {
