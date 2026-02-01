@@ -21,7 +21,6 @@ public class MyApplication {
         this.currentUser = new User(1, "Admin", Role.ADMIN);
     }
 
-    // ... внутри класса MyApplication ...
 
     public void start() {
         while (true) {
@@ -102,7 +101,6 @@ public class MyApplication {
         int year = scanner.nextInt();
         scanner.nextLine();
 
-        // Передаем 4 аргумента в контроллер
         System.out.println(controller.addBook(currentUser, title, authorId, year));
     }
 
@@ -133,7 +131,6 @@ public class MyApplication {
         int rating = scanner.nextInt();
         scanner.nextLine();
 
-        // Вызов метода контроллера для сохранения отзыва
         String result = feedbackController.leaveFeedback(name, message, rating);
         System.out.println(result);
     }
