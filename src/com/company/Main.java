@@ -1,38 +1,40 @@
 package com.company;
 
 import com.company.controllers.UserController;
-import com.company.data.PostgresDB;
+import com.company.controllers.FeedbackController;
+import com.company.controllers.interfaces.IFeedbackController;
+import com.company.data.DBInstance;
 import com.company.data.interfaces.IDB;
-import com.company.repositories.BookRepository;
-import com.company.repositories.ClientRepository;
-import com.company.repositories.UserRepository;
-import com.company.repositories.interfaces.IBookRepository;
-import com.company.repositories.interfaces.IClientRepository;
-import com.company.repositories.interfaces.IUserRepository;
+import com.company.factories.RepositoryFactory;
+import com.company.repositories.FeedbackRepository;
+import com.company.repositories.interfaces.*;
 
 public class Main {
 
-    private static String[] args;
+    public static void main(String[] args) {
+        IDB db = DBInstance.getInstance();
 
-    static void main() {
-        Main.args = args;
+        IUserRepository userRepo = RepositoryFactory.createUserRepo(db);
+        IBookRepository bookRepo = RepositoryFactory.createBookRepo(db);
+        IClientRepository clientRepo = RepositoryFactory.createClientRepo(db);
+        ICategoryRepository categoryRepo = RepositoryFactory.createCategoryRepo(db);
 
-        IDB db = new PostgresDB(
-                "jdbc:postgresql://localhost:5432",
-                "postgres",
-                "0000",
-                "librd"
+        IFeedbackRepository feedbackRepo = new FeedbackRepository(db);
+        UserController userController = new UserController(
+                userRepo,
+                bookRepo,
+                clientRepo,
+                categoryRepo
         );
 
-        IUserRepository userRepo = new UserRepository(db);
-        IBookRepository bookRepo = new BookRepository(db);
-        IClientRepository clientRepo = new ClientRepository(db);
+        IFeedbackController feedbackController = new FeedbackController(feedbackRepo);
+        MyApplication app = new MyApplication(userController, feedbackController);
 
-        UserController controller =
-                new UserController(userRepo, bookRepo, clientRepo);
-
-        MyApplication app = new MyApplication(controller);
+        System.out.println("Connecting to database and starting application...");
 
         app.start();
+
+        db.close();
     }
 }
+

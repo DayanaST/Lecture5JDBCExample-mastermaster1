@@ -29,11 +29,11 @@ public record BookRepository(IDB db) implements IBookRepository {
     @Override
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-
-        String sql =
-                "SELECT b.book_id, b.title, b.author_id, u.name AS author_name " +
-                        "FROM books b " +
-                        "LEFT JOIN users u ON b.author_id = u.author_id";
+        // Двойной JOIN: присоединяем автора и категорию
+        String sql = "SELECT b.book_id, b.title, b.author_id, u.name AS author_name, c.name AS cat_name " +
+                "FROM books b " +
+                "LEFT JOIN users u ON b.author_id = u.author_id " +
+                "LEFT JOIN categories c ON b.category_id = c.id";
 
         try (Connection con = db.getConnection();
              Statement st = con.createStatement();
@@ -46,9 +46,9 @@ public record BookRepository(IDB db) implements IBookRepository {
                         rs.getInt("author_id")
                 );
                 book.setAuthorName(rs.getString("author_name"));
+                book.setCategoryName(rs.getString("cat_name")); // Записываем категорию
                 books.add(book);
             }
-
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

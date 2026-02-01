@@ -46,11 +46,8 @@ public class UserRepository implements IUserRepository {
 
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new User(
-                        rs.getString("name")
-                        // пока по умолчанию
-                );
-
+                User name = new User(
+                        rs.getString("name");
             }
         } catch (SQLException e) {
             System.out.println("sql error: " + e.getMessage());

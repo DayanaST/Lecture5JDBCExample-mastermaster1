@@ -17,4 +17,8 @@ public class RepositoryFactory {
     public static IClientRepository createClientRepo(IDB db) {
         return new ClientRepository(db);
     }
+
+    public static ICategoryRepository createCategoryRepo(IDB db) {
+        return new CategoryRepository(db);
+    }
 }

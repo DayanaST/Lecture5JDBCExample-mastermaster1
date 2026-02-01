@@ -1,24 +1,27 @@
 package com.company;
 
 import com.company.controllers.UserController;
+import com.company.controllers.interfaces.IFeedbackController;
 import com.company.models.Book;
 import com.company.models.User;
 import com.company.models.Client;
 import com.company.models.Role;
-
 import java.util.List;
 import java.util.Scanner;
 
 public class MyApplication {
-
     private final Scanner scanner = new Scanner(System.in);
     private final UserController controller;
-    private final User currentUser;
+    private final IFeedbackController feedbackController;
+    private User currentUser;
 
-    public MyApplication(UserController controller) {
+    public MyApplication(UserController controller, IFeedbackController feedbackController) {
         this.controller = controller;
+        this.feedbackController = feedbackController;
         this.currentUser = new User(1, "Admin", Role.ADMIN);
     }
+
+    // ... внутри класса MyApplication ...
 
     public void start() {
         while (true) {
@@ -29,6 +32,8 @@ public class MyApplication {
             System.out.println("4. Add new book");
             System.out.println("5. Show all clients");
             System.out.println("6. Add new client");
+            System.out.println("7. Leave feedback");
+            System.out.println("8. Show all categories"); // Новый пункт
             System.out.println("0. Exit");
             System.out.print("Select option: ");
 
@@ -52,18 +57,34 @@ public class MyApplication {
             case 4 -> addBook();
             case 5 -> showClients();
             case 6 -> addClient();
+            case 7 -> leaveFeedbackMenu();
+            case 8 -> showCategories(); // Метод для вывода категорий
             default -> System.out.println("Wrong option");
         }
     }
 
+    private void showCategories() {
+        System.out.println("List of categories:");
+        controller.getAllCategories().forEach(System.out::println);
+    }
+
+
     private void showBooks() {
         List<Book> books = controller.getAllBooks();
-        books.forEach(System.out::println);
+        if (books == null || books.isEmpty()) {
+            System.out.println("No books found");
+        } else {
+            books.forEach(System.out::println);
+        }
     }
 
     private void showAuthors() {
         List<User> users = controller.getAllUsers();
-        users.forEach(System.out::println);
+        if (users == null || users.isEmpty()) {
+            System.out.println("No authors found");
+        } else {
+            users.forEach(System.out::println);
+        }
     }
 
     private void addAuthor() {
@@ -84,7 +105,11 @@ public class MyApplication {
 
     private void showClients() {
         List<Client> clients = controller.getAllClients();
-        clients.forEach(System.out::println);
+        if (clients == null || clients.isEmpty()) {
+            System.out.println("No clients found");
+        } else {
+            clients.forEach(System.out::println);
+        }
     }
 
     private void addClient() {
