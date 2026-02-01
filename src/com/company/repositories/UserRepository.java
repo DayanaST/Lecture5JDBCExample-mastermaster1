@@ -17,72 +17,62 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public boolean createUser(User user) {
-        try (Connection con = db.getConnection()) {
-
-            String sql = "INSERT INTO users(name) VALUES (?)";
-            PreparedStatement st = con.prepareStatement(sql);
+        String sql = "INSERT INTO users(name) VALUES (?)";
+        // try-with-resources автоматически закроет Connection и PreparedStatement
+        try (Connection con = db.getConnection();
+             PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setString(1, user.getName());
-
-            int rows = st.executeUpdate();
-
-            return rows > 0;
+            return st.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("sql error: " + e.getMessage());
+            System.out.println("SQL error: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     @Override
     public User getUser(int id) {
-        Connection con = null;
-
-        try {
-            con = db.getConnection();
-            String sql = "SELECT author_id, name FROM users WHERE author_id=?";
-            PreparedStatement st = con.prepareStatement(sql);
+        String sql = "SELECT author_id, name FROM users WHERE author_id=?";
+        try (Connection con = db.getConnection();
+             PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setInt(1, id);
-
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                return new User(
-                        rs.getInt("author_id"),
-                        rs.getString("name"),
-                        Role.USER
-                );
+            try (ResultSet rs = st.executeQuery()) { // Вложенный try для ResultSet
+                if (rs.next()) {
+                    return new User(
+                            rs.getInt("author_id"),
+                            rs.getString("name"),
+                            Role.USER
+                    );
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
         }
-
-        catch (SQLException e) {
-            System.out.println("sql error: " + e.getMessage());
-        }
-
         return null;
     }
 
-    // Исправленный метод getAllUsers()
     @Override
     public List<User> getAllUsers() {
-        try (Connection con = db.getConnection()) {
-            String sql = "SELECT author_id, name FROM users";
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            List<User> users = new ArrayList<>();
+        String sql = "SELECT author_id, name FROM users";
+        List<User> users = new ArrayList<>();
+
+        try (Connection con = db.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
             while (rs.next()) {
-                // Исправлено: добавлены 3 аргумента (id, name, role)
-                User user = new User(
+                users.add(new User(
                         rs.getInt("author_id"),
                         rs.getString("name"),
-                        Role.USER // Роль по умолчанию
-                );
-                users.add(user);
+                        Role.USER
+                ));
             }
             return users;
         } catch (SQLException e) {
-            System.out.println("sql error: " + e.getMessage());
+            System.out.println("SQL error: " + e.getMessage());
+            return null;
         }
-        return null;
     }
 }
