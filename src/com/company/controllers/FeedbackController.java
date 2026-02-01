@@ -13,12 +13,12 @@ public class FeedbackController implements IFeedbackController {
     }
 
     @Override
-    public String leaveFeedback(String userName, String message, int rating) {
+    public String leaveFeedback(String Name, String message, int rating) {
         if (rating < 1 || rating > 5) {
             return "Rating must be between 1 and 5!";
         }
 
-        Feedback feedback = new Feedback(userName, message, rating);
+        Feedback feedback = new Feedback(Name, message, rating);
         boolean success = repo.saveFeedback(feedback);
 
         return success ? "Feedback saved successfully!" : "Error saving feedback.";

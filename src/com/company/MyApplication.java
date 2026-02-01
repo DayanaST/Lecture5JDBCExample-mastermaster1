@@ -98,9 +98,12 @@ public class MyApplication {
         String title = scanner.nextLine();
         System.out.print("Enter author ID: ");
         int authorId = scanner.nextInt();
+        System.out.print("Enter published year: "); // Добавлен запрос года
+        int year = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println(controller.addBook(currentUser, title, authorId));
+        // Передаем 4 аргумента в контроллер
+        System.out.println(controller.addBook(currentUser, title, authorId, year));
     }
 
     private void showClients() {
@@ -119,5 +122,19 @@ public class MyApplication {
         String lastName = scanner.nextLine();
 
         System.out.println(controller.addClient(firstName, lastName));
+    }
+
+    private void leaveFeedbackMenu() {
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter your feedback: ");
+        String message = scanner.nextLine();
+        System.out.print("Rate us (1-5): ");
+        int rating = scanner.nextInt();
+        scanner.nextLine();
+
+        // Вызов метода контроллера для сохранения отзыва
+        String result = feedbackController.leaveFeedback(name, message, rating);
+        System.out.println(result);
     }
 }

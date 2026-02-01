@@ -22,19 +22,18 @@ public class UserController {
         return text != null && text.trim().length() >= 2;
     }
 
-    // ИСПРАВЛЕНО: Добавлены операторы ||
     private boolean hasPermission(User user) {
         return user.getRole() == Role.ADMIN || user.getRole() == Role.MANAGER;
     }
 
-    public String addBook(User user, String title, int authorId) {
+    public String addBook(User user, String title, int authorId, int year) {
         if (!hasPermission(user)) return "Access denied";
 
         if (!isValidString(title) || authorId <= 0) {
             return "Invalid input data";
         }
 
-        return bookRepo.createBook(new Book(0, title, authorId))
+        return bookRepo.createBook(new Book(0, title, authorId, year))
                 ? "Book added successfully" : "Failed to add book";
     }
 
@@ -44,7 +43,6 @@ public class UserController {
 
     public boolean addAuthor(String name) {
         if (!isValidString(name)) return false;
-        // ИСПРАВЛЕНО: Добавлен Role.USER (3 аргумента для конструктора)
         return userRepo.createUser(new User(0, name, Role.USER));
     }
 
@@ -59,5 +57,9 @@ public class UserController {
 
     public List<Category> getAllCategories() {
         return categoryRepo.getAllCategories();
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepo.getAllBooks();
     }
 }
