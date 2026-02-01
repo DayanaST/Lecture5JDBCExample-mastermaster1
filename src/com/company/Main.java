@@ -19,9 +19,12 @@ public class Main {
         );
 
         IUserRepository userRepo = new UserRepository(db);
-        BookRepository bookRepo = new BookRepository(db);
+        IBookRepository bookRepo = new BookRepository(db);
+        IClientRepository clientRepo = new ClientRepository(db);
 
-        UserController controller = new UserController(userRepo, bookRepo);
+        UserController controller =
+                new UserController(userRepo, bookRepo, clientRepo);
+
         MyApplication app = new MyApplication(controller);
 
         app.start();
