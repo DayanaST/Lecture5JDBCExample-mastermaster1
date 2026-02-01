@@ -1,23 +1,22 @@
 package com.company;
 
 import com.company.controllers.UserController;
-import com.company.controllers.interfaces.IFeedbackController;
 import com.company.models.Book;
 import com.company.models.User;
 import com.company.models.Client;
 import com.company.models.Role;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class MyApplication {
+
     private final Scanner scanner = new Scanner(System.in);
     private final UserController controller;
-    private final IFeedbackController feedbackController;
-    private User currentUser;
+    private final User currentUser;
 
-    public MyApplication(UserController controller, IFeedbackController feedbackController) {
+    public MyApplication(UserController controller) {
         this.controller = controller;
-        this.feedbackController = feedbackController;
         this.currentUser = new User(1, "Admin", Role.ADMIN);
     }
 
@@ -30,7 +29,6 @@ public class MyApplication {
             System.out.println("4. Add new book");
             System.out.println("5. Show all clients");
             System.out.println("6. Add new client");
-            System.out.println("7. Leave feedback");
             System.out.println("0. Exit");
             System.out.print("Select option: ");
 
@@ -52,43 +50,20 @@ public class MyApplication {
             case 2 -> showAuthors();
             case 3 -> addAuthor();
             case 4 -> addBook();
-            case 5 -> showClients(); // Новый метод
-            case 6 -> addClient(); // Новый метод
-            case 7 -> leaveFeedbackMenu();
+            case 5 -> showClients();
+            case 6 -> addClient();
             default -> System.out.println("Wrong option");
         }
     }
 
-    private void leaveFeedbackMenu() {
-        System.out.print("Your name: ");
-        String name = scanner.nextLine();
-        System.out.print("Your feedback: ");
-        String message = scanner.nextLine();
-        System.out.print("Rating (1-5): ");
-        int rating = scanner.nextInt();
-
-        System.out.println(
-                feedbackController.leaveFeedback(name, message, rating)
-        );
-    }
-
-
     private void showBooks() {
         List<Book> books = controller.getAllBooks();
-        if (books == null || books.isEmpty()) {
-            System.out.println("No books found");
-        } else {
-            books.forEach(System.out::println);
-        }
+        books.forEach(System.out::println);
     }
 
     private void showAuthors() {
         List<User> users = controller.getAllUsers();
-        if (users == null || users.isEmpty()) {
-            System.out.println("No authors found");
-        } else {
-            users.forEach(System.out::println);
-        }
+        users.forEach(System.out::println);
     }
 
     private void addAuthor() {
@@ -109,11 +84,7 @@ public class MyApplication {
 
     private void showClients() {
         List<Client> clients = controller.getAllClients();
-        if (clients == null || clients.isEmpty()) {
-            System.out.println("No clients found");
-        } else {
-            clients.forEach(System.out::println);
-        }
+        clients.forEach(System.out::println);
     }
 
     private void addClient() {

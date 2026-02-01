@@ -29,7 +29,7 @@ public class UserController {
     }
 
     private boolean hasPermission(User user) {
-        return user.getRole() == Role.ADMIN  user.getRole() == Role.MANAGER;
+        return user != null && user.getRole() == Role.ADMIN;
     }
 
     public String addBook(User user, String title, int authorId) {
@@ -58,11 +58,11 @@ public class UserController {
         if (!isValidString(name)) {
             return false;
         }
-        return userRepo.createUser(new User(name));
+        return userRepo.createUser(new User(name, Role.AUTHOR));
     }
 
     public String addClient(String fName, String lName) {
-        if (!isValidString(fName) || !isValidString(lName)) {
+        if (!isValidString(fName)  !isValidString(lName)) {
             return "Invalid input data";
         }
 
