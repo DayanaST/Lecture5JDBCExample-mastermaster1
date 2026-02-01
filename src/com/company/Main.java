@@ -4,12 +4,18 @@ import com.company.controllers.UserController;
 import com.company.data.PostgresDB;
 import com.company.data.interfaces.IDB;
 import com.company.repositories.BookRepository;
+import com.company.repositories.ClientRepository;
 import com.company.repositories.UserRepository;
+import com.company.repositories.interfaces.IBookRepository;
+import com.company.repositories.interfaces.IClientRepository;
 import com.company.repositories.interfaces.IUserRepository;
 
 public class Main {
 
-    public static void main(String[] args) {
+    private static String[] args;
+
+    static void main() {
+        Main.args = args;
 
         IDB db = new PostgresDB(
                 "jdbc:postgresql://localhost:5432",
