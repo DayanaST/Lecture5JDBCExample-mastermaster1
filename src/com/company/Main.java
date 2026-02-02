@@ -24,7 +24,8 @@ public class Main {
                 userRepo,
                 bookRepo,
                 clientRepo,
-                categoryRepo);
+                categoryRepo
+        );
 
         IFeedbackController feedbackController = new FeedbackController(feedbackRepo);
         MyApplication app = new MyApplication(userController, feedbackController);

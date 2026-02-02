@@ -5,15 +5,15 @@ public class Book {
     private String title;
     private int authorId;
     private int publishedYear;
+    private String authorName;
+    private String categoryName;
 
-    public Book(int id, String title, int authorId, int publishedYear, String authorName, String categoryName) {
+
+    public Book(int id, String title, int authorId, int publishedYear) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
         this.publishedYear = publishedYear;
-    }
-
-    public Book(int id, String title, int authorId, int publishedYear) {
     }
 
     public String getTitle() {
@@ -26,18 +26,18 @@ public class Book {
     }
 
     public int getPublishedYear() { return publishedYear; }
-    public void setPublishedYear(int publishedYear) { this.publishedYear = publishedYear; }
 
     public void setAuthorName(String authorName) {
 
     }
     public void setCategoryName(String categoryName) {
     }
+
     @Override
     public String toString() {
         return "Book ID: " + id +
-                " | Title: '" + title + '\'' +
+                " | Title: '" + (title == null ? "N/A" : title) + '\'' +
                 " | Year: " + (publishedYear == 0 ? "Unknown" : publishedYear) +
-                " | Author ID: " + authorId;
+                " | Author: " + (authorName == null ? "ID " + authorId : authorName);
     }
 }
