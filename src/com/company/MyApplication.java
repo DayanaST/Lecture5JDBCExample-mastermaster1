@@ -91,7 +91,6 @@ public class MyApplication {
         String name = scanner.nextLine();
         System.out.println(controller.addAuthor(name) ? "Success" : "Failed");
     }
-
     private void addBook() {
         System.out.println("\n--- Adding a new book ---");
         System.out.print("Enter book title: ");
@@ -102,8 +101,7 @@ public class MyApplication {
 
         System.out.print("Enter published year: ");
         int year = scanner.nextInt();
-
-        System.out.print("Enter category ID (see list in option 8): ");
+        System.out.print("Enter category ID: ");
         int categoryId = scanner.nextInt();
         scanner.nextLine();
 
