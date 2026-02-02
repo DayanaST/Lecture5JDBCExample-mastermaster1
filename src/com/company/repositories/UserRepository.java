@@ -21,11 +21,11 @@ public class UserRepository implements IUserRepository {
         try (Connection con = db.getConnection();
              PreparedStatement st = con.prepareStatement(sql)) {
 
-            st.setString(1, user.getName()
+            st.setString(1, user.getName());
             return st.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("SQL error:
+            System.out.println("SQL error: " + e.getMessage());
             return false;
         }
     }
@@ -47,6 +47,7 @@ public class UserRepository implements IUserRepository {
                 }
             }
         } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
         }
         return null;
     }
