@@ -27,10 +27,11 @@ public class UserController {
     }
 
     public String addBook(User user, String title, int authorId, int year, int categoryId) {
-        if (!hasPermission(user)) return "Access denied";
-        if (!isValidString(title)  authorId <= 0  categoryId <= 0) {
+         if (!hasPermission(user)) return "Access denied";
+        if (!isValidString(title) || authorId <= 0 || categoryId <= 0) {
             return "Invalid input data: check title, author or category ID";
         }
+
         Book newBook = new Book(0, title, authorId, year, categoryId);
 
         return bookRepo.createBook(newBook)

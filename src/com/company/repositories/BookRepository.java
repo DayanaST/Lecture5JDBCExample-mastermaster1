@@ -50,7 +50,8 @@ public class BookRepository implements IBookRepository {
                         rs.getInt("book_id"),
                         rs.getString("title"),
                         rs.getInt("author_id"),
-                        rs.getInt("published_year")
+                        rs.getInt("published_year"),
+                        rs.getInt("category_id")
                 );
                 book.setCategoryName(rs.getString("cat_name"));
                 books.add(book);
