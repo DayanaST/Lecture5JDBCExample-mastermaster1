@@ -17,17 +17,18 @@ public class BookRepository implements IBookRepository {
 
     @Override
     public boolean createBook(Book book) {
-        String sql = "INSERT INTO books(title, author_id, published_year) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO books(title, author_id, published_year, category_id) VALUES (?, ?, ?, ?)";
         try (Connection con = db.getConnection();
              PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setString(1, book.getTitle());
             st.setInt(2, book.getAuthorId());
             st.setInt(3, book.getPublishedYear());
+            st.setInt(4, book.getCategoryId());
 
             return st.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println("Error creating book: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             return false;
         }
     }

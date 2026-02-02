@@ -93,15 +93,22 @@ public class MyApplication {
     }
 
     private void addBook() {
+        System.out.println("\n--- Adding a new book ---");
         System.out.print("Enter book title: ");
         String title = scanner.nextLine();
+
         System.out.print("Enter author ID: ");
         int authorId = scanner.nextInt();
+
         System.out.print("Enter published year: ");
         int year = scanner.nextInt();
+
+        System.out.print("Enter category ID (see list in option 8): ");
+        int categoryId = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println(controller.addBook(currentUser, title, authorId, year));
+        String result = controller.addBook(currentUser, title, authorId, year, categoryId);
+        System.out.println(result);
     }
 
     private void showClients() {

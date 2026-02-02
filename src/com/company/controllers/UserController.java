@@ -26,15 +26,16 @@ public class UserController {
         return user.getRole() == Role.ADMIN || user.getRole() == Role.MANAGER;
     }
 
-    public String addBook(User user, String title, int authorId, int year) {
+    public String addBook(User user, String title, int authorId, int year, int categoryId) {
         if (!hasPermission(user)) return "Access denied";
-
-        if (!isValidString(title) || authorId <= 0) {
-            return "Invalid input data";
+        if (!isValidString(title)  authorId <= 0  categoryId <= 0) {
+            return "Invalid input data: check title, author or category ID";
         }
+        Book newBook = new Book(0, title, authorId, year, categoryId);
 
-        return bookRepo.createBook(new Book(0, title, authorId, year))
-                ? "Book added successfully" : "Failed to add book";
+        return bookRepo.createBook(newBook)
+                ? "Book added successfully with category!"
+                : "Failed to add book";
     }
 
     public List<User> getAllUsers() {
