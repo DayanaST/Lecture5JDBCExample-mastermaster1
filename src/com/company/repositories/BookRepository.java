@@ -35,14 +35,14 @@ public class BookRepository implements IBookRepository {
     @Override
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT b.*, u.name as author_name, c.name as category_name " +
+        String sql = "SELECT b.*, u.name as author_name, c.name as cat_name " +
                 "FROM books b " +
                 "LEFT JOIN users u ON b.author_id = u.author_id " +
                 "LEFT JOIN categories c ON b.category_id = c.id";
 
         try (Connection con = db.getConnection();
-             PreparedStatement st = con.prepareStatement(sql);
-             ResultSet rs = st.executeQuery()) {
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
                 Book book = new Book(
@@ -51,16 +51,12 @@ public class BookRepository implements IBookRepository {
                         rs.getInt("author_id"),
                         rs.getInt("published_year")
                 );
-                book.setAuthorName(rs.getString("author_name"));
-                book.setCategoryName(rs.getString("category_name"));
+                book.setCategoryName(rs.getString("cat_name"));
                 books.add(book);
             }
-        } catch (SQLException e) {
-            System.out.println("Error fetching books: " + e.getMessage());
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
         return books;
     }
-
     public List<Book> getBooksByAuthor(int authorId) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE author_id = ?";

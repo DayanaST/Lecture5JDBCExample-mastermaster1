@@ -32,7 +32,7 @@ public class MyApplication {
             System.out.println("5. Show all clients");
             System.out.println("6. Add new client");
             System.out.println("7. Leave feedback");
-            System.out.println("8. Show all categories"); // Новый пункт
+            System.out.println("8. Show all categories");
             System.out.println("0. Exit");
             System.out.print("Select option: ");
 
@@ -57,7 +57,7 @@ public class MyApplication {
             case 5 -> showClients();
             case 6 -> addClient();
             case 7 -> leaveFeedbackMenu();
-            case 8 -> showCategories(); // Метод для вывода категорий
+            case 8 -> showCategories();
             default -> System.out.println("Wrong option");
         }
     }
@@ -97,7 +97,7 @@ public class MyApplication {
         String title = scanner.nextLine();
         System.out.print("Enter author ID: ");
         int authorId = scanner.nextInt();
-        System.out.print("Enter published year: "); // Добавлен запрос года
+        System.out.print("Enter published year: ");
         int year = scanner.nextInt();
         scanner.nextLine();
 
