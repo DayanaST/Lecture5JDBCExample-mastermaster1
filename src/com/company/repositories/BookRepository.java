@@ -17,7 +17,6 @@ public class BookRepository implements IBookRepository {
 
     @Override
     public boolean createBook(Book book) {
-        // Добавлена колонка category_id, если она есть в вашей схеме БД
         String sql = "INSERT INTO books(title, author_id, published_year) VALUES (?, ?, ?)";
         try (Connection con = db.getConnection();
              PreparedStatement st = con.prepareStatement(sql)) {
@@ -36,8 +35,6 @@ public class BookRepository implements IBookRepository {
     @Override
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        // ОПТИМИЗАЦИЯ: JOIN сразу с двумя таблицами (Авторы и Категории)
-        // Это требование №1 (JOINs) и №7 (Categories)
         String sql = "SELECT b.*, u.name as author_name, c.name as category_name " +
                 "FROM books b " +
                 "LEFT JOIN users u ON b.author_id = u.author_id " +
@@ -54,7 +51,6 @@ public class BookRepository implements IBookRepository {
                         rs.getInt("author_id"),
                         rs.getInt("published_year")
                 );
-                // Устанавливаем дополнительные данные из JOIN
                 book.setAuthorName(rs.getString("author_name"));
                 book.setCategoryName(rs.getString("category_name"));
                 books.add(book);
@@ -65,7 +61,6 @@ public class BookRepository implements IBookRepository {
         return books;
     }
 
-    // Метод для фильтрации (например, только книги с авторами)
     public List<Book> getBooksByAuthor(int authorId) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM books WHERE author_id = ?";

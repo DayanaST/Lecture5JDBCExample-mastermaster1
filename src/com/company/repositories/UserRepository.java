@@ -18,11 +18,10 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean createUser(User user) {
         String sql = "INSERT INTO users(name) VALUES (?)";
-        // try-with-resources автоматически закроет Connection и PreparedStatement
         try (Connection con = db.getConnection();
              PreparedStatement st = con.prepareStatement(sql)) {
 
-            st.setString(1, user.getName());
+            st.setString(1, user.getName()
             return st.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -38,7 +37,7 @@ public class UserRepository implements IUserRepository {
              PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setInt(1, id);
-            try (ResultSet rs = st.executeQuery()) { // Вложенный try для ResultSet
+            try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     return new User(
                             rs.getInt("author_id"),
