@@ -25,7 +25,7 @@ public class UserRepository implements IUserRepository {
             return st.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("SQL error: " + e.getMessage());
+            System.out.println("SQL error:
             return false;
         }
     }
