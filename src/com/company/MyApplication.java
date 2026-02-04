@@ -23,12 +23,37 @@ public class MyApplication {
 
 
     public void start() {
+        System.out.println("Welcome to the Library System!");
+        System.out.println("Select your role to log in:");
+        System.out.println("1. ADMIN (Full access)");
+        System.out.println("2. MANAGER (Can add books/authors)");
+        System.out.println("3. USER (Read only)");
+        System.out.print("Choice: ");
+
+        try {
+            int roleChoice = scanner.nextInt();
+            scanner.nextLine(); // Очистка буфера
+
+            switch (roleChoice) {
+                case 1 -> currentUser = new User(1, "SystemAdmin", Role.ADMIN);
+                case 2 -> currentUser = new User(2, "SystemManager", Role.MANAGER);
+                default -> currentUser = new User(3, "GuestUser", Role.USER);
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid choice, logging in as Guest (USER).");
+            currentUser = new User(3, "GuestUser", Role.USER);
+            scanner.nextLine();
+        }
+
+        System.out.println("\nSuccessfully logged in as: " + currentUser.getName());
+        System.out.println("Current Permissions: " + currentUser.getRole());
+
         while (true) {
             System.out.println("\n--- LIBRARY SYSTEM ---");
             System.out.println("1. Show all books");
             System.out.println("2. Show all authors");
-            System.out.println("3. Add new author");
-            System.out.println("4. Add new book");
+            System.out.println("3. Add new author (Restricted)");
+            System.out.println("4. Add new book (Restricted)");
             System.out.println("5. Show all clients");
             System.out.println("6. Add new client");
             System.out.println("7. Leave feedback");
@@ -91,6 +116,7 @@ public class MyApplication {
         String name = scanner.nextLine();
         System.out.println(controller.addAuthor(name) ? "Success" : "Failed");
     }
+
     private void addBook() {
         System.out.println("\n--- Adding a new book ---");
         System.out.print("Enter book title: ");
@@ -101,6 +127,7 @@ public class MyApplication {
 
         System.out.print("Enter published year: ");
         int year = scanner.nextInt();
+
         System.out.print("Enter category ID: ");
         int categoryId = scanner.nextInt();
         scanner.nextLine();
@@ -135,8 +162,6 @@ public class MyApplication {
         System.out.print("Rate us (1-5): ");
         int rating = scanner.nextInt();
         scanner.nextLine();
-
-        String result = feedbackController.leaveFeedback(name, message, rating);
-        System.out.println(result);
+        feedbackController.leaveFeedback(name, message, rating);
     }
 }
