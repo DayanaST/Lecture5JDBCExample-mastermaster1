@@ -58,6 +58,7 @@ public class MyApplication {
             System.out.println("6. Add new client");
             System.out.println("7. Leave feedback");
             System.out.println("8. Show all categories");
+            System.out.println("9. Search books by title");
             System.out.println("0. Exit");
             System.out.print("Select option: ");
 
@@ -83,6 +84,7 @@ public class MyApplication {
             case 6 -> addClient();
             case 7 -> leaveFeedbackMenu();
             case 8 -> showCategories();
+            case 9 -> searchBooks();
             default -> System.out.println("Wrong option");
         }
     }
@@ -157,11 +159,28 @@ public class MyApplication {
     private void leaveFeedbackMenu() {
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
+
         System.out.print("Enter your feedback: ");
         String message = scanner.nextLine();
+
         System.out.print("Rate us (1-5): ");
         int rating = scanner.nextInt();
         scanner.nextLine();
-        feedbackController.leaveFeedback(name, message, rating);
+        String result = feedbackController.leaveFeedback(name, message, rating);
+        System.out.println(result);
+    }
+
+    private void searchBooks() {
+        System.out.print("Enter book title to search: ");
+        String title = scanner.nextLine();
+
+        List<Book> foundBooks = controller.searchBooksByTitle(title);
+
+        if (foundBooks.isEmpty()) {
+            System.out.println("No books found with title: " + title);
+        } else {
+            System.out.println("\n--- Search Results ---");
+            foundBooks.forEach(System.out::println);
+        }
     }
 }

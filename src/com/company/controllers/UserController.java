@@ -1,10 +1,13 @@
 package com.company.controllers;
 
+import com.company.controllers.interfaces.IUserController;
 import com.company.models.*;
 import com.company.repositories.interfaces.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserController {
+public  class UserController implements IUserController {
     private final IUserRepository userRepo;
     private final IBookRepository bookRepo;
     private final IClientRepository clientRepo;
@@ -39,6 +42,16 @@ public class UserController {
                 : "Failed to add book";
     }
 
+    @Override
+    public String createUser(String name) {
+        return "";
+    }
+
+    @Override
+    public String getUser(int id) {
+        return "";
+    }
+
     public List<User> getAllUsers() {
         return userRepo.getAllUsers();
     }
@@ -63,5 +76,10 @@ public class UserController {
 
     public List<Book> getAllBooks() {
         return bookRepo.getAllBooks();
+    }
+
+    public List<Book> searchBooksByTitle(String title) {
+        if (title == null || title.trim().isEmpty()) return new ArrayList<>();
+        return bookRepo.findBooksByTitle(title);
     }
 }

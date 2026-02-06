@@ -20,6 +20,7 @@ public class Book {
     }
 
     public Book(int bookId, String title, int authorId, int publishedYear) {
+        this(bookId, title, authorId, publishedYear, 0);
     }
 
     public String getTitle() {

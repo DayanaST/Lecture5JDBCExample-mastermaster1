@@ -82,4 +82,54 @@ public class BookRepository implements IBookRepository {
         }
         return books;
     }
+
+    @Override
+    public List<Book> findBooksByTitle(String title) {
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT b.*, u.name as author_name, c.name as cat_name " +
+                "FROM books b " +
+                "LEFT JOIN users u ON b.author_id = u.author_id " +
+                "LEFT JOIN categories c ON b.category_id = c.id " +
+                "WHERE b.title ILIKE ?"; // ILIKE для регистронезависимого поиска в Postgres
+
+        try (Connection con = db.getConnection();
+             PreparedStatement st = con.prepareStatement(sql)) {
+
+            st.setString(1, "%" + title + "%"); // Поиск подстроки
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Book book = new Book(
+                        rs.getInt("book_id"),
+                        rs.getString("title"),
+                        rs.getInt("author_id"),
+                        rs.getInt("published_year"),
+                        rs.getInt("category_id")
+                );
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            System.out.println("Search error: " + e.getMessage());
+        }
+        return books;
+    }
+
+    @Override
+    public List<Book> findBooksByAuthorId(int authorId) {
+        return List.of();
+    }
+
+    @Override
+    public boolean deleteBook(int id) {
+        String sql = "DELETE FROM books WHERE book_id = ?";
+        try (Connection con = db.getConnection();
+             PreparedStatement st = con.prepareStatement(sql)) {
+
+            st.setInt(1, id);
+            return st.executeUpdate() > 0; // Возвращает true, если строка была удалена
+        } catch (SQLException e) {
+            System.out.println("Delete error: " + e.getMessage());
+            return false;
+        }
+    }
 }

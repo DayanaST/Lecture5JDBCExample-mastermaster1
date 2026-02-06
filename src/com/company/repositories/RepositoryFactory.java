@@ -22,3 +22,4 @@ public class RepositoryFactory {
         return new CategoryRepository(db);
     }
 }
+
