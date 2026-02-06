@@ -1,13 +1,10 @@
 package com.company.controllers;
 
-import com.company.controllers.interfaces.IUserController;
 import com.company.models.*;
 import com.company.repositories.interfaces.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public  class UserController implements IUserController {
+public class UserController {
     private final IUserRepository userRepo;
     private final IBookRepository bookRepo;
     private final IClientRepository clientRepo;
@@ -42,16 +39,6 @@ public  class UserController implements IUserController {
                 : "Failed to add book";
     }
 
-    @Override
-    public String createUser(String name) {
-        return "";
-    }
-
-    @Override
-    public String getUser(int id) {
-        return "";
-    }
-
     public List<User> getAllUsers() {
         return userRepo.getAllUsers();
     }
@@ -77,9 +64,14 @@ public  class UserController implements IUserController {
     public List<Book> getAllBooks() {
         return bookRepo.getAllBooks();
     }
+    public String removeBook(User user, int id) {
+        if (user.getRole() != Role.ADMIN) {
+            return "Access denied: Only administrators can delete books.";
+        }
 
-    public List<Book> searchBooksByTitle(String title) {
-        if (title == null || title.trim().isEmpty()) return new ArrayList<>();
-        return bookRepo.findBooksByTitle(title);
+        if (id <= 0) return "Invalid book ID.";
+
+        boolean deleted = bookRepo.deleteBook(id);
+        return deleted ? "Book deleted successfully!" : "Book not found or failed to delete.";
     }
 }
