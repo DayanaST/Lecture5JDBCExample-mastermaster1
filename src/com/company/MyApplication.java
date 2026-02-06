@@ -29,6 +29,7 @@ public class MyApplication {
         System.out.println("2. MANAGER (Can add books/authors)");
         System.out.println("3. USER (Read only)");
         System.out.print("Choice: ");
+        System.out.println("10. Delete book (Admin only)");
 
         try {
             int roleChoice = scanner.nextInt();
@@ -85,6 +86,7 @@ public class MyApplication {
             case 7 -> leaveFeedbackMenu();
             case 8 -> showCategories();
             case 9 -> searchBooks();
+            case 10 -> deleteBookMenu();
             default -> System.out.println("Wrong option");
         }
     }
@@ -181,6 +183,19 @@ public class MyApplication {
         } else {
             System.out.println("\n--- Search Results ---");
             foundBooks.forEach(System.out::println);
+        }
+    }
+    private void deleteBookMenu() {
+        System.out.print("Enter book ID to delete: ");
+        try {
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Очистка буфера
+
+            String message = controller.removeBook(currentUser, id);
+            System.out.println(message);
+        } catch (Exception e) {
+            System.out.println("Please enter a valid numeric ID.");
+            scanner.nextLine();
         }
     }
 }
