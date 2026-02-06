@@ -33,7 +33,7 @@ public class MyApplication {
 
         try {
             int roleChoice = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine();
 
             switch (roleChoice) {
                 case 1 -> currentUser = new User(1, "SystemAdmin", Role.ADMIN);
@@ -190,7 +190,7 @@ public class MyApplication {
         System.out.print("Enter book ID to delete: ");
         try {
             int id = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine();
 
             String message = controller.removeBook(currentUser, id);
             System.out.println(message);

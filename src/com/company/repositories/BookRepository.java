@@ -90,12 +90,12 @@ public class BookRepository implements IBookRepository {
                 "FROM books b " +
                 "LEFT JOIN users u ON b.author_id = u.author_id " +
                 "LEFT JOIN categories c ON b.category_id = c.id " +
-                "WHERE b.title ILIKE ?"; // ILIKE для регистронезависимого поиска в Postgres
+                "WHERE b.title ILIKE ?";
 
         try (Connection con = db.getConnection();
              PreparedStatement st = con.prepareStatement(sql)) {
 
-            st.setString(1, "%" + title + "%"); // Поиск подстроки
+            st.setString(1, "%" + title + "%");
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -126,7 +126,7 @@ public class BookRepository implements IBookRepository {
              PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setInt(1, id);
-            return st.executeUpdate() > 0; // Возвращает true, если строка была удалена
+            return st.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Delete error: " + e.getMessage());
             return false;
