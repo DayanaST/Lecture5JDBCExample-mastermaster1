@@ -29,7 +29,7 @@ public class MyApplication {
         System.out.println("2. MANAGER (Can add books/authors)");
         System.out.println("3. USER (Read only)");
         System.out.print("Choice: ");
-        System.out.println("10. Delete book (Admin only)");
+
 
         try {
             int roleChoice = scanner.nextInt();
@@ -60,6 +60,7 @@ public class MyApplication {
             System.out.println("7. Leave feedback");
             System.out.println("8. Show all categories");
             System.out.println("9. Search books by title");
+            System.out.println("10. Delete book (Admin only)");
             System.out.println("0. Exit");
             System.out.print("Select option: ");
 

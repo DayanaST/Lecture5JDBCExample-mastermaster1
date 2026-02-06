@@ -74,4 +74,8 @@ public class UserController {
         boolean deleted = bookRepo.deleteBook(id);
         return deleted ? "Book deleted successfully!" : "Book not found or failed to delete.";
     }
+
+    public List<Book> searchBooksByTitle(String title) {
+        return List.of();
+    }
 }
